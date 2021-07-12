@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_item_classes"
+        android:title="Classes"
+        android:enabled="true"
+        android:icon="@drawable/icon_class"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_item_tests"
+        android:title="Tests"
+        android:enabled="true"
+        android:icon="@drawable/icon_test"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_item_profile"
+        android:title="Profile"
+        android:enabled="true"
+        android:icon="@drawable/icon_profile"
+        app:showAsAction="ifRoom"/>
+</menu>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "641961422581",
+    "project_id": "online-exam-add69",
+    "storage_bucket": "online-exam-add69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641961422581:android:a2264d8699d7478be55fbc",
+        "android_client_info": {
+          "package_name": "com.ajayvenkateshgunturu.onlineexam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641961422581-1ee1arepr5q4ueraesntbtfha542krro.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYbGY9_nYEvgnVsiGXRu4R2zR_8SFPmG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641961422581-1ee1arepr5q4ueraesntbtfha542krro.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
