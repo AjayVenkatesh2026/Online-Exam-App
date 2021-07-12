@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    android:layout_marginTop="8dp"
+    tools:backgroundTint="#F9F9F9">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relative_layout_list_item_classes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/text_view_list_item_class_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="#F1F1F1"
+            android:minWidth="44dp"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200"
+            android:textSize="40sp"
+            android:layout_centerVertical="true"
+            app:layout_constraintEnd_toStartOf="@id/linear_layout_container"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="T" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/text_view_list_item_class_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-black"
+                android:textSize="24sp"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/text_view_list_item_class_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                tools:text="Description" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
