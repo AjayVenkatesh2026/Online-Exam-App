@@ -36,6 +36,8 @@ public class LoginUserActivity extends AppCompatActivity implements redirectList
         setContentView(R.layout.activity_login_user);
 
         intViews();
+
+        loginButton.callOnClick();
     }
 
     private void intViews() {
@@ -64,6 +66,9 @@ public class LoginUserActivity extends AppCompatActivity implements redirectList
     private void loginUser(redirectListener listener) {
         String email = Objects.requireNonNull(emailEditText.getText()).toString().toLowerCase().trim();
         String password = Objects.requireNonNull(passwordEditText.getText()).toString();
+
+        email = "mail2@gmail.com";
+        password = "password";
 
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(getApplicationContext(), "Empty fields", Toast.LENGTH_SHORT).show();

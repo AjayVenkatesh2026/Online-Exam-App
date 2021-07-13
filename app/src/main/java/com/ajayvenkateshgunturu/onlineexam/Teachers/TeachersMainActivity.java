@@ -19,6 +19,26 @@ public class TeachersMainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    private NavigationBarView.OnItemSelectedListener onItemSelectedListener = new NavigationBarView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            int id = item.getItemId();
+            if(id == R.id.menu_item_classes){
+                Toast.makeText(TeachersMainActivity.this, "Classes Clicked", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, ClassesTeachersFragment.class, null).commit();
+            }
+            else if(id == R.id.menu_item_profile){
+                Toast.makeText(TeachersMainActivity.this, "Profile Clicked", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, ProfileTeachersFragment.class, null).commit();
+            }
+            else if(id == R.id.menu_item_tests){
+                Toast.makeText(TeachersMainActivity.this, "Tests Clicked", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, TestsTeachersFragment.class, null).commit();
+            }
+            return true;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,34 +47,18 @@ public class TeachersMainActivity extends AppCompatActivity {
         intiViews();
 
         setListeners();
+
     }
 
     private void setListeners() {
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if(id == R.id.menu_item_classes){
-                    Toast.makeText(TeachersMainActivity.this, "Classes Clicked", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, ClassesTeachersFragment.class, null).commit();
-                    return true;
-                }else if(id == R.id.menu_item_profile){
-                    Toast.makeText(TeachersMainActivity.this, "Profile Clicked", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, ProfileTeachersFragment.class, null).commit();
-                    return true;
-                }else if(id == R.id.menu_item_tests){
-                    Toast.makeText(TeachersMainActivity.this, "Tests Clicked", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, TestsTeachersFragment.class, null).commit();
-                    return true;
-                }
-                return false;
-            }
-        });
+        bottomNavigationView.setOnItemSelectedListener(onItemSelectedListener);
+        bottomNavigationView.setSelectedItemId(R.id.menu_item_classes);
+
     }
 
     private void intiViews() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_teachers);
-        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container_view_teacher, ClassesTeachersFragment.class, null).commit();
+        //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, ClassesTeachersFragment.class, null).commit();
     }
 
     @Override
