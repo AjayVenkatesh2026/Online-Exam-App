@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineExam">
-        <activity android:name=".Teachers.CreateNewClassroomActivity"
+        <activity android:name=".Teachers.CreateNewTestActivity"></activity>
+        <activity
+            android:name=".Teachers.CreateNewClassroomActivity"
             android:label="Create New ClassRoom"
-            android:parentActivityName=".Teachers.TeachersMainActivity"/>
+            android:parentActivityName=".Teachers.TeachersMainActivity" />
         <activity
             android:name=".Students.StudentsMainActivity"
             android:label="Student" />

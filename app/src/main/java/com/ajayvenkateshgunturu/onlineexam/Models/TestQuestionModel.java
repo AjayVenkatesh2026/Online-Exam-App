@@ -2,7 +2,15 @@ package com.ajayvenkateshgunturu.onlineexam.Models;
 
 public class TestQuestionModel {
     String question, optionOne, optionTwo, optionThree, optionFour;
-    int numOfOptions;
+    String type, title, description;
+    int numOfOptions, priority;
+
+    public TestQuestionModel(String title, String description) {
+        this.title = title;
+        this.description = description;
+        type = "Header";
+        priority = 0;
+    }
 
     public TestQuestionModel(String question, String optionOne, String optionTwo, String optionThree, String optionFour) {
         this.question = question;
@@ -10,22 +18,38 @@ public class TestQuestionModel {
         this.optionTwo = optionTwo;
         this.optionThree = optionThree;
         this.optionFour = optionFour;
-        numOfOptions = 4;
-    }
 
-    public TestQuestionModel(String question, String optionOne, String optionTwo, String optionThree) {
-        this.question = question;
-        this.optionOne = optionOne;
-        this.optionTwo = optionTwo;
-        this.optionThree = optionThree;
-        numOfOptions = 3;
-    }
-
-    public TestQuestionModel(String question, String optionOne, String optionTwo) {
-        this.question = question;
-        this.optionOne = optionOne;
-        this.optionTwo = optionTwo;
         numOfOptions = 2;
+
+        if(!optionThree.isEmpty()){
+            numOfOptions = 3;
+        }
+
+        if(optionThree.isEmpty() && !optionFour.isEmpty()){
+            numOfOptions = 3;
+            this.optionFour = "";
+            this.optionThree = optionFour;
+        }
+
+        if(!optionThree.isEmpty() && !optionFour.isEmpty()){
+            numOfOptions = 4;
+        }
+
+        type = "Question";
+        priority = 1;
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getQuestion() {
@@ -52,6 +76,18 @@ public class TestQuestionModel {
         return numOfOptions;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -66,13 +102,19 @@ public class TestQuestionModel {
 
     public void setOptionThree(String optionThree) {
         this.optionThree = optionThree;
+        if(this.numOfOptions == 2){
+            this.numOfOptions = 3;
+        }
     }
 
     public void setOptionFour(String optionFour) {
         this.optionFour = optionFour;
+        if(this.numOfOptions == 2){
+            setOptionThree(optionFour);
+        }
+        else if(this.numOfOptions == 3){
+            this.numOfOptions = 4;
+        }
     }
 
-    public void setNumOfOptions(int numOfOptions) {
-        this.numOfOptions = numOfOptions;
-    }
 }

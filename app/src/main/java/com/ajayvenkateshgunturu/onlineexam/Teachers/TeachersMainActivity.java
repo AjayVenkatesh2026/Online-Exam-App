@@ -76,6 +76,7 @@ public class TeachersMainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_item_new_test:
                 Toast.makeText(this, "New Test Clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, CreateNewTestActivity.class));
                 break;
             case R.id.menu_item_sign_out:
                 Toast.makeText(this, "Sign out Clicked", Toast.LENGTH_SHORT).show();
