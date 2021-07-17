@@ -1,4 +1,4 @@
-package com.ajayvenkateshgunturu.onlineexam.Teachers;
+package com.ajayvenkateshgunturu.onlineexam.Students;
 
 import android.os.Bundle;
 
@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,21 +24,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
-
-public class ClassesTeachersFragment extends Fragment {
+public class ClassesStudentsFragment extends Fragment implements joinNewClassListener{
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     DatabaseReference reference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
-    private RecyclerView classesRecyclerView;
-    private ArrayList<ClassModel> array = new ArrayList<>();
+    private RecyclerView recyclerView;
     private ClassesAdapter adapter;
+    private ArrayList<ClassModel> array = new ArrayList<>();
 
-    public ClassesTeachersFragment() {
+    public ClassesStudentsFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,51 +48,32 @@ public class ClassesTeachersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_classes_teachers, container, false);
+        return inflater.inflate(R.layout.fragment_classes_students, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        classesRecyclerView = view.findViewById(R.id.recycler_view_teachers_classes);
-        setRecyclerAdapter();
-        downloadData();
+        initViews(view);
+
+        setAdapter();
+
+        retrieveClassIds();
     }
 
-    private void downloadData() {
-
-        //Function to download the data of classes created by the current user(teacher)
-        //function call to retrieveClassIds to get the classIds created by the current user from firebase
-
-        retrieveClassIds(new getClassIdsListener() {
-            @Override
-            public void setClassIds(ArrayList<Integer> arrayList) {
-
-                //arrayList contains the list of classIds that the user created
-                //Following retrieveData call is to get the data of the respective classes of each classId in the arraylist
-
-                retrieveData(new retrieveClasses() {
-                    @Override
-                    public void retrieveClass(ClassModel classModel) {
-
-                        //after a class' data is retrieved, add it to the array and call notifyDataSetChanged() to update the elements in recyclerview.
-                        array.add(classModel);
-                        adapter.notifyDataSetChanged();
-                    }
-                }, arrayList);
-            }
-        });
+    private void initViews(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view_students_classes);
     }
 
-    private void setRecyclerAdapter() {
+    private void setAdapter() {
         adapter = new ClassesAdapter(array);
-        classesRecyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
-    private void retrieveClassIds(getClassIdsListener listener) {
+    private void retrieveClassIds() {
         String id = auth.getUid();
-        reference.child("Teachers").child(id).child("Classes").addValueEventListener(new ValueEventListener() {
+        reference.child("Students").child(id).child("Classes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Integer> arr = new ArrayList<>();
@@ -106,7 +85,17 @@ public class ClassesTeachersFragment extends Fragment {
                         Log.e("snapshot", "doesn't exist");
                     }
                 }
-                listener.setClassIds(arr);
+                array.clear();
+                adapter.notifyDataSetChanged();
+                retrieveData(new getStudentClassesListener() {
+                    @Override
+                    public void retrieveClasses(ClassModel classModel) {
+
+                        //after a class' data is retrieved, add it to the array and call notifyDataSetChanged() to update the elements in recyclerview.
+                        array.add(classModel);
+                        adapter.notifyItemInserted(array.size()-1);
+                    }
+                }, arr);
             }
 
             @Override
@@ -116,7 +105,7 @@ public class ClassesTeachersFragment extends Fragment {
         });
     }
 
-    private void retrieveData(retrieveClasses listener, ArrayList<Integer> classIds) {
+    private void retrieveData(getStudentClassesListener listener, ArrayList<Integer> classIds) {
 
         //ArrayList<ClassModel> arrayList = new ArrayList<>();
         for(int classId: classIds){
@@ -125,7 +114,7 @@ public class ClassesTeachersFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         ClassModel classModel = snapshot.getValue(ClassModel.class);
-                        listener.retrieveClass(classModel);
+                        listener.retrieveClasses(classModel);
                     }
                 }
                 @Override
@@ -136,12 +125,21 @@ public class ClassesTeachersFragment extends Fragment {
             });
         }
     }
+
+    @Override
+    public void setClassId(int classId) {
+
+    }
 }
 
-interface retrieveClasses {
-    void retrieveClass(ClassModel classModel);
+interface joinNewClassListener{
+    void setClassId(int classId);
 }
 
-interface getClassIdsListener {
+interface getStudentClassIdsListener{
     void setClassIds(ArrayList<Integer> arrayList);
+}
+
+interface getStudentClassesListener{
+    void retrieveClasses(ClassModel classModel);
 }
