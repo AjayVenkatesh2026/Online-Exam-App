@@ -70,18 +70,26 @@ public class ClassesTeachersFragment extends Fragment {
 
     private void downloadData() {
 
-        Log.e("downloadData", "Called");
+        //Function to download the data of classes created by the current user(teacher)
+        //function call to retrieveClassIds to get the classIds created by the current user from firebase
 
         retrieveClassIds(new getClassIdsListener() {
             @Override
             public void setClassIds(ArrayList<Integer> arrayList) {
+
+                //arrayList contains the list of classIds that the user created
+                //Following retrieveData call is to get the data of the respective classes of each classId in the arraylist
+
                 retrieveData(new retrieveClasses() {
                     @Override
                     public void retrieveClass(ClassModel classModel) {
+
+                        //after a class' data is retrieved, add it to the array and call notifyDataSetChanged() to update the elements in recyclerview.
                         array.add(classModel);
                         adapter.notifyDataSetChanged();
                     }
                 }, arrayList);
+
             }
         });
     }
@@ -116,15 +124,14 @@ public class ClassesTeachersFragment extends Fragment {
     }
 
     private void retrieveData(retrieveClasses listener, ArrayList<Integer> classIds) {
-        ArrayList<ClassModel> arrayList = new ArrayList<>();
+
+        //ArrayList<ClassModel> arrayList = new ArrayList<>();
         for(int classId: classIds){
             reference.child("Classes").child(String.valueOf(classId)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.e("ValueEventListener", "Called");
                     if (snapshot.exists()) {
                         ClassModel classModel = snapshot.getValue(ClassModel.class);
-                        classModel.log();
                         listener.retrieveClass(classModel);
                     }
                 }

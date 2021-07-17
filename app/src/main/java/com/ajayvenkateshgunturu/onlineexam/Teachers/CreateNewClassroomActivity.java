@@ -60,12 +60,14 @@ public class CreateNewClassroomActivity extends AppCompatActivity{
                     Toast.makeText(CreateNewClassroomActivity.this, "empty fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 doesClassExist(new checkClassExistsListener() {
                     @Override
                     public void setResult(boolean result) {
                         if(result){
                             Toast.makeText(CreateNewClassroomActivity.this, "Result is true", Toast.LENGTH_SHORT).show();
                             Log.e("In OnClick result", "true");
+                            createClassButton.callOnClick();
                         }else{
                             Log.e("In OnClick result", "false");
                             createNewClass(classId, className, classDescription);
@@ -133,7 +135,7 @@ public class CreateNewClassroomActivity extends AppCompatActivity{
         );
     }
 
-    public int generateRandomId(int num){
+    public static int generateRandomId(int num){
         int n = 0;
         Random rand = new Random();
         for(int i = 0; i < num; i++) {

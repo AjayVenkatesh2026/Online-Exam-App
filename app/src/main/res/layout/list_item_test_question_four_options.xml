@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:cardCornerRadius="4dp"
+    android:elevation="2dp"
+    app:cardUseCompatPadding="true"
+    tools:backgroundTint="#E0E0E0">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,43 +21,55 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textSize="20sp"
+            android:fontFamily="sans-serif-condensed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Question" />
 
         <RadioGroup
+            android:id="@+id/radio_group_test_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_group_test_options"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_list_item_test_question">
 
             <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/radio_button_option_one"
-                android:text="option one"
-                android:textSize="16sp"/>
-            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="option one"
+                android:textSize="16sp"
+                android:paddingBottom="4dp"
+                android:fontFamily="sans-serif-condensed"/>
+
+            <RadioButton
                 android:id="@+id/radio_button_option_two"
-                android:text="option one"
-                android:textSize="16sp"/>
-            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="option one"
+                android:textSize="16sp"
+                android:paddingBottom="4dp"
+                android:fontFamily="sans-serif-condensed"/>
+
+            <RadioButton
                 android:id="@+id/radio_button_option_three"
-                android:text="option one"
-                android:textSize="16sp"/>
-            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/radio_button_option_four"
                 android:text="option one"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:paddingBottom="4dp"
+                android:fontFamily="sans-serif-condensed"/>
+
+            <RadioButton
+                android:id="@+id/radio_button_option_four"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="option one"
+                android:textSize="16sp"
+                android:paddingBottom="4dp"
+                android:fontFamily="sans-serif-condensed"                />
 
         </RadioGroup>
 

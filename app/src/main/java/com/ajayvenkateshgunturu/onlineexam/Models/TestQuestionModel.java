@@ -5,11 +5,15 @@ public class TestQuestionModel {
     String type, title, description;
     int numOfOptions, priority;
 
+    public TestQuestionModel(){
+
+    }
+
     public TestQuestionModel(String title, String description) {
         this.title = title;
         this.description = description;
         type = "Header";
-        priority = 0;
+        this.priority = 0;
     }
 
     public TestQuestionModel(String question, String optionOne, String optionTwo, String optionThree, String optionFour) {
@@ -36,9 +40,12 @@ public class TestQuestionModel {
         }
 
         type = "Question";
-        priority = 1;
+        this.priority = 1;
     }
 
+    public int getPriority() {
+        return priority;
+    }
 
     public String getType() {
         return type;
@@ -74,6 +81,14 @@ public class TestQuestionModel {
 
     public int getNumOfOptions() {
         return numOfOptions;
+    }
+
+    public void setNumOfOptions(int numOfOptions) {
+        this.numOfOptions = numOfOptions;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public void setType(String type) {
@@ -117,4 +132,8 @@ public class TestQuestionModel {
         }
     }
 
+    public void log(){
+        System.out.println("Title: " + title + "\n"
+        + "Description: " + description + "\n");
+    }
 }
