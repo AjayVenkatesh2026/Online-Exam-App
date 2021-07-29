@@ -37,7 +37,6 @@ public class LoginUserActivity extends AppCompatActivity implements redirectList
 
         intViews();
 
-        loginButton.callOnClick();
     }
 
     private void intViews() {
@@ -67,8 +66,8 @@ public class LoginUserActivity extends AppCompatActivity implements redirectList
         String email = Objects.requireNonNull(emailEditText.getText()).toString().toLowerCase().trim();
         String password = Objects.requireNonNull(passwordEditText.getText()).toString();
 
-        email = "mail2@gmail.com";
-        password = "password";
+//        email = "mail2@gmail.com";
+//        password = "password";
 
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(getApplicationContext(), "Empty fields", Toast.LENGTH_SHORT).show();

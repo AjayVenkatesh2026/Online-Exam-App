@@ -88,6 +88,9 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
                                 testRef.push().setValue(t);
                             }
                         }
+
+                        startActivity(new Intent(CreateNewTestActivity.this, TeachersMainActivity.class));
+                        finish();
                     }
                 }, TestUniqueId);
             }

@@ -1,6 +1,8 @@
 package com.ajayvenkateshgunturu.onlineexam.Adapters;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ajayvenkateshgunturu.onlineexam.Models.ClassModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
+import com.ajayvenkateshgunturu.onlineexam.Teachers.ClassesTeachersFragment;
+import com.ajayvenkateshgunturu.onlineexam.Teachers.ShowClassActivity;
+import com.ajayvenkateshgunturu.onlineexam.Teachers.TeachersMainActivity;
 
 import java.util.ArrayList;
 
 public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.classViewHolder> {
 
     ArrayList<ClassModel> arrayList;
+    Context parentContext;
 
-    public ClassesAdapter(ArrayList<ClassModel> arrayList) {
+    public ClassesAdapter(Context context, ArrayList<ClassModel> arrayList) {
+        parentContext = context;
         this.arrayList = arrayList;
     }
 
@@ -56,6 +63,15 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.classVie
             classIcon.setText(currentClass.getClassName().substring(0, 1).toUpperCase());
             classTitle.setText(currentClass.getClassName());
             classDescription.setText(currentClass.getClassDescription());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(parentContext, ShowClassActivity.class);
+                    i.putExtra("classId", currentClass.getClassId());
+                    parentContext.startActivity(i);
+                }
+            });
         }
     }
 }

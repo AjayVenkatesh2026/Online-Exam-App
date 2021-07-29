@@ -6,15 +6,27 @@ public class ClassModel {
     String classId;
     String className;
     String classDescription;
+    String classAdminId;
 
     public ClassModel(){
 
+    }
+
+    public ClassModel(String classId, String className, String classDescription, String classAdmin) {
+        this.classId = classId;
+        this.className = className;
+        this.classDescription = classDescription;
+        this.classAdminId = classAdmin;
     }
 
     public ClassModel(String classId, String className, String classDescription) {
         this.classId = classId;
         this.className = className;
         this.classDescription = classDescription;
+    }
+
+    public String getClassAdmin() {
+        return classAdminId;
     }
 
     public String getClassId() {
@@ -27,6 +39,10 @@ public class ClassModel {
 
     public String getClassDescription() {
         return classDescription;
+    }
+
+    public void setClassAdmin(String classAdmin) {
+        this.classAdminId = classAdmin;
     }
 
     public void setClassId(String classId) {

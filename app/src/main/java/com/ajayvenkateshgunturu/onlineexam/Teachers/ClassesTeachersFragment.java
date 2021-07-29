@@ -27,8 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
-
 public class ClassesTeachersFragment extends Fragment {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -88,7 +86,7 @@ public class ClassesTeachersFragment extends Fragment {
     }
 
     private void setRecyclerAdapter() {
-        adapter = new ClassesAdapter(array);
+        adapter = new ClassesAdapter(getContext(), array);
         classesRecyclerView.setAdapter(adapter);
     }
 

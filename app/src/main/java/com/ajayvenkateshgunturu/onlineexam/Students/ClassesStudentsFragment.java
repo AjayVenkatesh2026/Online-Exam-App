@@ -67,7 +67,7 @@ public class ClassesStudentsFragment extends Fragment implements joinNewClassLis
     }
 
     private void setAdapter() {
-        adapter = new ClassesAdapter(array);
+        adapter = new ClassesAdapter(getContext(), array);
         recyclerView.setAdapter(adapter);
     }
 
