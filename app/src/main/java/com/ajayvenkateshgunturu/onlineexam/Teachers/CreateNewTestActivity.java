@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.TestsAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
@@ -71,11 +73,13 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
             @Override
             public void onClick(View v) {
                 int TestUniqueId = CreateNewClassroomActivity.generateRandomId(7);
+                Log.e("Create new test button", "clicked");
 
                 uploadData(new checkIfTestIdExists(){
                     @Override
                     public void setResult(boolean result) {
                         if(result){
+                            Toast.makeText(CreateNewTestActivity.this, "Same test Id\n trying again...", Toast.LENGTH_SHORT).show();
                             createNewTestButton.callOnClick();
                         }else{
                             reference.child("Teachers").child(mAuth.getUid()).child("Tests").child(String.valueOf(TestUniqueId)).setValue("true");
@@ -120,10 +124,10 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
         reference.child("Tests").child(String.valueOf(testId)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    listener.setResult(true);
-                }else{
+                if(task.getResult().getValue() == null){
                     listener.setResult(false);
+                }else{
+                    listener.setResult(true);
                 }
             }
         });

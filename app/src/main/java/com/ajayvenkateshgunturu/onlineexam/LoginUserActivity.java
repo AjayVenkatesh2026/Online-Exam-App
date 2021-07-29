@@ -67,7 +67,7 @@ public class LoginUserActivity extends AppCompatActivity implements redirectList
         String email = Objects.requireNonNull(emailEditText.getText()).toString().toLowerCase().trim();
         String password = Objects.requireNonNull(passwordEditText.getText()).toString();
 
-        email = "venky@gmail.com";
+        email = "mail2@gmail.com";
         password = "password";
 
         if(email.isEmpty() || password.isEmpty()){
