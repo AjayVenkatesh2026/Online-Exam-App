@@ -60,7 +60,6 @@ public class RegisterUserActivity extends AppCompatActivity implements myCallbac
 
         authInstance = FirebaseAuth.getInstance();
         firebaseDatabaseReference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
-        firebaseDatabaseReference.child("Students").setValue("two");
     }
 
 

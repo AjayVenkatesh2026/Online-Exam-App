@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class ShowClassActivity extends AppCompatActivity {
 
     ArrayList<String> array = new ArrayList<>();
+    ArrayList<String> studentsArray = new ArrayList<>();
     RecyclerView classRecyclerView;
 
     @Override
@@ -30,9 +31,10 @@ public class ShowClassActivity extends AppCompatActivity {
 
         for(int i = 0; i < 20; i++){
             array.add(String.valueOf(i));
+            studentsArray.add(String.valueOf(i));
         }
 
-        ClassItemAdapter adapter = new ClassItemAdapter(array);
+        ClassItemAdapter adapter = new ClassItemAdapter(array, studentsArray);
         classRecyclerView.setAdapter(adapter);
     }
 }

@@ -7,4 +7,6 @@
         android:title="create new test"/>
     <item android:id="@+id/menu_item_sign_out"
         android:title="sign out"/>
+    <item android:id="@+id/menu_item_join_class"
+        android:title="join a new class"/>
 </menu>

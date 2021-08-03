@@ -9,8 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.ajayvenkateshgunturu.onlineexam.Constants;
 import com.ajayvenkateshgunturu.onlineexam.LoginUserActivity;
 import com.ajayvenkateshgunturu.onlineexam.R;
+import com.ajayvenkateshgunturu.onlineexam.Students.JoinAClassFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,6 +85,11 @@ public class TeachersMainActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, LoginUserActivity.class));
                 finish();
+                break;
+            case R.id.menu_item_join_class:
+                JoinAClassFragment joinAClassFragment = new JoinAClassFragment(Constants.TYPE_TEACHERS);
+                joinAClassFragment.show(getSupportFragmentManager(), "Join a new Class");
+                Toast.makeText(this, "Join a class clicked!", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return false;

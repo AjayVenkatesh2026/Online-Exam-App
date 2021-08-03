@@ -90,7 +90,7 @@ public class CreateNewClassroomActivity extends AppCompatActivity{
                 if(task.isSuccessful()){
                     Log.e("New Class", "Created");
                     Toast.makeText(CreateNewClassroomActivity.this, "New Class Created", Toast.LENGTH_SHORT).show();
-                    uploadClassData(classId);
+                    uploadTeacher(classId);
                 }else{
                     Log.e("New Class", "Not Created");
                     Toast.makeText(CreateNewClassroomActivity.this, "New Class Not Created", Toast.LENGTH_SHORT).show();
@@ -98,6 +98,23 @@ public class CreateNewClassroomActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    private void uploadTeacher(int classId){
+
+        reference.child("Classes").child(String.valueOf(classId)).child("Teachers").child(auth.getUid()).setValue(auth.getCurrentUser().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.e("New Teacher", "Added");
+                    Toast.makeText(CreateNewClassroomActivity.this, "New Teacher Created", Toast.LENGTH_SHORT).show();
+                    uploadClassData(classId);
+                }else{
+                    Log.e("New Teacher", "Not Added");
+                    Toast.makeText(CreateNewClassroomActivity.this, "New Teacher Not Created", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void uploadClassData(int classId){

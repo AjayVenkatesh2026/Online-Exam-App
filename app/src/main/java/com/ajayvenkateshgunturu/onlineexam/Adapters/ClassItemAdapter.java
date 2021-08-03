@@ -14,16 +14,29 @@ import java.util.ArrayList;
 
 public class ClassItemAdapter extends RecyclerView.Adapter<ClassItemAdapter.classItemViewHolder> {
 
-    ArrayList<String> arrayList;
+    ArrayList<String> teachersArrayList;
+    ArrayList<String> studentsArrayList;
+    int teachersArraySize;
+
+    public ClassItemAdapter(ArrayList<String> teachersArrayList, ArrayList<String> studentsArrayList) {
+        this.teachersArrayList = teachersArrayList;
+        this.studentsArrayList = studentsArrayList;
+        this.teachersArraySize = teachersArrayList.size();
+    }
 
     public ClassItemAdapter(ArrayList<String> arrayList) {
-        this.arrayList = arrayList;
+        this.teachersArrayList = arrayList;
     }
 
     @NonNull
     @Override
     public classItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_class_item, parent,false);
+        View v;
+        if(viewType == 0){
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_class_item_title, parent,false);
+        }else{
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_class_item, parent,false);
+        }
         return new classItemViewHolder(v);
     }
 
@@ -34,7 +47,15 @@ public class ClassItemAdapter extends RecyclerView.Adapter<ClassItemAdapter.clas
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return teachersArraySize+ studentsArrayList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(position == 0 || position == teachersArraySize){
+            return 0;
+        }
+        return 1;
     }
 
     class classItemViewHolder extends RecyclerView.ViewHolder{
@@ -48,7 +69,13 @@ public class ClassItemAdapter extends RecyclerView.Adapter<ClassItemAdapter.clas
         }
 
         public void bind(int position){
-            textView.setText(arrayList.get(position));
+            String text;
+            if(position < teachersArraySize){
+                text = teachersArrayList.get(position);
+            }else{
+                text = studentsArrayList.get(position-teachersArraySize);
+            }
+            textView.setText(text);
         }
     }
 }

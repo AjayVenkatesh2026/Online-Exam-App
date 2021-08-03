@@ -30,9 +30,14 @@ public class JoinAClassFragment extends DialogFragment {
     private TextView addButton, cancelButton;
     private DatabaseReference reference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private String type;
 
     public JoinAClassFragment() {
         // Required empty public constructor
+    }
+
+    public JoinAClassFragment(String type) {
+        this.type = type;
     }
 
     @Override
@@ -77,16 +82,30 @@ public class JoinAClassFragment extends DialogFragment {
                 }
                 else{
                     if (strClassId.length() == 6) {
-                        Log.e("strClassId", strClassId);
-                        reference.child(Constants.TYPE_STUDENTS).child(auth.getUid()).child("Classes").child(strClassId).setValue("true");
-                        reference.child("Classes").child(strClassId).child(Constants.TYPE_STUDENTS).child(auth.getUid()).setValue("true").addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.e("Message", "Joined the class");
+                        if(type == Constants.TYPE_STUDENTS){
+                            Log.e("strClassId", strClassId);
+                            reference.child(Constants.TYPE_STUDENTS).child(auth.getUid()).child("Classes").child(strClassId).setValue("true");
+                            reference.child("Classes").child(strClassId).child(Constants.TYPE_STUDENTS).child(auth.getUid()).setValue(auth.getCurrentUser().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.e("Message", "Joined the class");
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }else if(type == Constants.TYPE_TEACHERS){
+                            Log.e("strClassId", strClassId);
+                            reference.child(Constants.TYPE_TEACHERS).child(auth.getUid()).child("Classes").child(strClassId).setValue("true");
+                            reference.child("Classes").child(strClassId).child(Constants.TYPE_TEACHERS).child(auth.getUid()).setValue(auth.getCurrentUser().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.e("Message", "Joined the class");
+                                    }
+                                }
+                            });
+                        }
+
                     }else{
                         Log.e("Message", "Invalid Class Id");
                     }

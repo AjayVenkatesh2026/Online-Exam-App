@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.ajayvenkateshgunturu.onlineexam.Constants;
 import com.ajayvenkateshgunturu.onlineexam.LoginUserActivity;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.ajayvenkateshgunturu.onlineexam.Teachers.ClassesTeachersFragment;
@@ -73,7 +74,7 @@ public class StudentsMainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.menu_item_join_class:
-                JoinAClassFragment joinAClassFragment = new JoinAClassFragment();
+                JoinAClassFragment joinAClassFragment = new JoinAClassFragment(Constants.TYPE_STUDENTS);
                 joinAClassFragment.show(getSupportFragmentManager(), "Join a new Class");
                 Toast.makeText(this, "Join a class clicked!", Toast.LENGTH_SHORT).show();
                 break;
