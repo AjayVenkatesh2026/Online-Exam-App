@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class AddQuestionToTestFragment extends DialogFragment {
 
-    private TextInputEditText question, optionOne, optionTwo, optionThree, optionFour;
+    private TextInputEditText question, optionOne, optionTwo, optionThree, optionFour, answer;
     private TextView cancelButton, addButton;
 
     public AddQuestionToTestFragment() {
@@ -67,13 +67,15 @@ public class AddQuestionToTestFragment extends DialogFragment {
                 String OptionTwo = optionTwo.getText().toString().trim();
                 String OptionThree = optionThree.getText().toString().trim();
                 String OptionFour = optionFour.getText().toString().trim();
+                String Answer = answer.getText().toString().trim();
 
                 TestQuestionModel questionModel;
 
-                if(q.isEmpty() || OptionOne.isEmpty() || OptionTwo.isEmpty()){
+                if(q.isEmpty() || OptionOne.isEmpty() || OptionTwo.isEmpty() || Answer.isEmpty()){
                     Toast.makeText(getActivity().getBaseContext(),"Empty Fields!", Toast.LENGTH_SHORT).show();
                 }else{
                     questionModel = new TestQuestionModel(q, OptionOne, OptionTwo, OptionThree, OptionFour);
+                    questionModel.setAns(Answer);
 
                     addNewTestQuestionListener newTestQuestionListener = (addNewTestQuestionListener) getActivity();
                     newTestQuestionListener.addNewQuestion(questionModel);
@@ -94,6 +96,7 @@ public class AddQuestionToTestFragment extends DialogFragment {
         optionTwo = view.findViewById(R.id.text_input_edit_text_editable_test_option_two);
         optionThree = view.findViewById(R.id.text_input_edit_text_editable_test_option_three);
         optionFour = view.findViewById(R.id.text_input_edit_text_editable_test_option_four);
+        answer = view.findViewById(R.id.text_input_edit_text_editable_test_answer_option);
 
         cancelButton = view.findViewById(R.id.text_view_test_cancel_button);
         addButton = view.findViewById(R.id.text_view_test_add_button);

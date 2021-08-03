@@ -4,6 +4,7 @@ public class TestQuestionModel {
     String question, optionOne, optionTwo, optionThree, optionFour;
     String type, title, description;
     int numOfOptions, priority;
+    String ans;
 
     public TestQuestionModel(){
 
@@ -77,6 +78,14 @@ public class TestQuestionModel {
 
     public String getOptionFour() {
         return optionFour;
+    }
+
+    public String getAns() {
+        return ans;
+    }
+
+    public void setAns(String ans) {
+        this.ans = ans;
     }
 
     public int getNumOfOptions() {
