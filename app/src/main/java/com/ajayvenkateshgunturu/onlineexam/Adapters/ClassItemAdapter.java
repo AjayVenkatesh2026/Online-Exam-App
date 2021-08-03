@@ -28,6 +28,15 @@ public class ClassItemAdapter extends RecyclerView.Adapter<ClassItemAdapter.clas
         this.teachersArrayList = arrayList;
     }
 
+    public void setTeachersArrayList(ArrayList<String> teachersArrayList) {
+        this.teachersArrayList = teachersArrayList;
+        this.teachersArraySize = teachersArrayList.size();
+    }
+
+    public void setStudentsArrayList(ArrayList<String> studentsArrayList) {
+        this.studentsArrayList = studentsArrayList;
+    }
+
     @NonNull
     @Override
     public classItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

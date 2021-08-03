@@ -5,8 +5,9 @@
         android:title="create new classroom"/>
     <item android:id="@+id/menu_item_new_test"
         android:title="create new test"/>
-    <item android:id="@+id/menu_item_sign_out"
-        android:title="sign out"/>
     <item android:id="@+id/menu_item_join_class"
         android:title="join a new class"/>
+    <item android:id="@+id/menu_item_sign_out"
+        android:title="Logout"/>
+
 </menu>
