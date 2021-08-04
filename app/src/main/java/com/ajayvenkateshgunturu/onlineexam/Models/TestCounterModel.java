@@ -1,5 +1,7 @@
 package com.ajayvenkateshgunturu.onlineexam.Models;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -22,9 +24,10 @@ public class TestCounterModel {
         this.duration = duration;
 
         targetDate = Calendar.getInstance();
-        targetDate.set(year, month, day, hour, minutes);
+        targetDate.set(year, month, day, hour, minutes, 0);
 
         calculateDifferenceInTime();
+        Date d = new Date();
     }
 
     private void calculateDifferenceInTime() {
@@ -50,7 +53,8 @@ public class TestCounterModel {
 
     public boolean isItTimeForTest(){
         calculateDifferenceInTime();
-        if(differenceInTime <= 0 && differenceInTime >= TimeUnit.MINUTES.toMillis(duration) * -1){
+        long dur = TimeUnit.MINUTES.toMillis(duration) * -1;
+        if(differenceInTime <= 0 && differenceInTime >= dur){
             return true;
         }
         return false;
@@ -66,7 +70,8 @@ public class TestCounterModel {
 
     public boolean isTimeUp(){
         calculateDifferenceInTime();
-        if(differenceInTime < TimeUnit.MINUTES.toMillis(duration) * -1 ){
+        long dur = TimeUnit.MINUTES.toMillis(duration) * -1;
+        if(differenceInTime < dur){
             return true;
         }
         return false;

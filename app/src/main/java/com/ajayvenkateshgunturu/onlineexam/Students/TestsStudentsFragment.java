@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.TestsStudentFragmentAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
+import com.ajayvenkateshgunturu.onlineexam.Models.TestCounterModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -109,7 +111,27 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
     @Override
     public void onTestItemClick(int position) {
         TestHeaderModel header = headerModelArrayList.get(position);
-        Intent i = new Intent(getActivity(), ConductTestActivity.class);
+        Intent i = new Intent();
+
+        int duration = Integer.parseInt(header.getDuration());
+        String[] date = header.getDate().split("-");
+        String[] time = header.getTime().split(":");
+
+        TestCounterModel counter = new TestCounterModel(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]),
+                Integer.parseInt(time[0]), Integer.parseInt(time[1]), duration);
+
+        if(counter.isThereTimeUntilTest()){
+            i = new Intent(getActivity(), TimeUntilTestActivity.class);
+            i.putExtra("time exceeded", false);
+        }else if(counter.isItTimeForTest()){
+            i = new Intent(getActivity(), ConductTestActivity.class);
+        }else if(counter.isTimeUp()){
+            i = new Intent(getActivity(), TimeUntilTestActivity.class);
+            i.putExtra("time exceeded", true);
+        }else{
+            Toast.makeText(getActivity(), "You messed up the if conditions!", Toast.LENGTH_SHORT).show();
+        }
+
         i.putExtra("header", header.toBundle());
         startActivity(i);
     }
