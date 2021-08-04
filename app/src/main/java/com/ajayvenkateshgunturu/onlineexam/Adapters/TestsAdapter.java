@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 
@@ -17,16 +18,39 @@ import java.util.ArrayList;
 
 public class TestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<TestQuestionModel> arrayList;
+    private TestHeaderModel header;
+    private ArrayList<TestQuestionModel> arrayList = new ArrayList<>();
+
+    public TestsAdapter() {
+    }
+
+    public TestsAdapter(TestHeaderModel header, ArrayList<TestQuestionModel> arrayList) {
+        this.header = header;
+        this.arrayList = arrayList;
+    }
 
     public TestsAdapter(ArrayList<TestQuestionModel> arrayList){
         this.arrayList = arrayList;
     }
 
+    public void setHeader(TestHeaderModel header) {
+        this.header = header;
+    }
+
+    public void setArrayList(ArrayList<TestQuestionModel> arrayList) {
+        this.arrayList = arrayList;
+    }
+
+    public void addTestQuestion(TestQuestionModel questionModel){
+        this.arrayList.add(questionModel);
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         RecyclerView.ViewHolder v;
+
         if(viewType == 0){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_test_header,parent, false);
             v = new TestHeaderViewHolder(view);
@@ -55,7 +79,11 @@ public class TestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        if(header == null){
+            return 0;
+        }
+
+        return arrayList.size()+1;
     }
 
     @Override
@@ -79,10 +107,9 @@ public class TestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
         void bind(int position){
-            TestQuestionModel questionModel = arrayList.get(position);
 
-            title.setText(questionModel.getTitle());
-            description.setText(questionModel.getDescription());
+            title.setText(header.getTitle());
+            description.setText(header.getDescription());
         }
     }
 
@@ -103,7 +130,7 @@ public class TestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         void bind(int position){
 
-            TestQuestionModel questionModel = arrayList.get(position);
+            TestQuestionModel questionModel = arrayList.get(position-1);
 
             question.setText(questionModel.getQuestion());
             optionOne.setText(questionModel.getOptionOne());

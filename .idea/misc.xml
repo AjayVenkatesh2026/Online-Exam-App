@@ -7,10 +7,13 @@
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/activity_create_new_test.xml" value="0.3333333333333333" />
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/activity_show_class.xml" value="0.3333333333333333" />
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/fragment_add_question_to_test.xml" value="0.3333333333333333" />
+        <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/fragment_post_test_dialog.xml" value="0.3333333333333333" />
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/list_item_class_item.xml" value="0.3333333333333333" />
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/list_item_class_item_title.xml" value="0.3333333333333333" />
+        <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/layout/list_item_classes_layout.xml" value="0.3333333333333333" />
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/menu/options_menu_students.xml" value="0.30185185185185187" />
         <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/menu/options_meu_teachers.xml" value="0.30185185185185187" />
+        <entry key="..\:/1/Android/Projects/OnlineExam/app/src/main/res/menu/popup_menu_tests_teachers.xml" value="0.3333333333333333" />
       </map>
     </option>
   </component>

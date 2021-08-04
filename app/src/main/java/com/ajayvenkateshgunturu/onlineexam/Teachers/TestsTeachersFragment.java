@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.TestFragmentAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
+import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +32,7 @@ public class TestsTeachersFragment extends Fragment {
     private RecyclerView recyclerView;
     private DatabaseReference reference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private ArrayList<TestQuestionModel> testsArrayList = new ArrayList<>();
+    private ArrayList<TestHeaderModel> testsArrayList = new ArrayList<>();
     private TestFragmentAdapter adapter;
 
     public TestsTeachersFragment() {
@@ -62,7 +63,7 @@ public class TestsTeachersFragment extends Fragment {
     }
 
     private void setAdapter() {
-        adapter = new TestFragmentAdapter(testsArrayList);
+        adapter = new TestFragmentAdapter(testsArrayList, this.getContext(), getParentFragmentManager());
         recyclerView.setAdapter(adapter);
     }
 
@@ -76,10 +77,10 @@ public class TestsTeachersFragment extends Fragment {
                 //function call to retrieve data of corresponding test from the testIds array
                 readTestsData(new addTestToArrayListener() {
                     @Override
-                    public void addTestToArray(TestQuestionModel testQuestionModel) {
+                    public void addTestToArray(TestHeaderModel headerModel) {
 
-                        testsArrayList.add(testQuestionModel);
-                        adapter.notifyDataSetChanged();
+                        testsArrayList.add(headerModel);
+                        adapter.notifyItemInserted(testsArrayList.size()-1);
                     }
                 }, testIds);
 
@@ -116,18 +117,13 @@ public class TestsTeachersFragment extends Fragment {
     private void readTestsData(addTestToArrayListener listener, ArrayList<Integer> arrayList){
 
         for(int testId: arrayList){
-            reference.child("Tests").child(String.valueOf(testId)).addValueEventListener(new ValueEventListener() {
+            reference.child("Tests").child(String.valueOf(testId)).child("Header").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
-                        for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                            TestQuestionModel testQuestionModel = dataSnapshot.getValue(TestQuestionModel.class);
-                            if(testQuestionModel.getType().equals("Header")){
-                                listener.addTestToArray(testQuestionModel);
-                                testQuestionModel.log();
-                                break;
-                            }
-                        }
+                        TestHeaderModel headerModel = snapshot.getValue(TestHeaderModel.class);
+                        listener.addTestToArray(headerModel);
+                        //testQuestionModel.log();
                     }
                 }
 
@@ -146,5 +142,5 @@ interface TestIdsListener{
 }
 
 interface addTestToArrayListener{
-    void addTestToArray(TestQuestionModel testQuestionModel);
+    void addTestToArray(TestHeaderModel testQuestionModel);
 }

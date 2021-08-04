@@ -75,6 +75,11 @@ public class AddQuestionToTestFragment extends DialogFragment {
                     Toast.makeText(getActivity().getBaseContext(),"Empty Fields!", Toast.LENGTH_SHORT).show();
                 }else{
                     questionModel = new TestQuestionModel(q, OptionOne, OptionTwo, OptionThree, OptionFour);
+
+                    if(Integer.parseInt(Answer) > questionModel.getNumOfOptions()){
+                        Toast.makeText(getContext(), "Answer cannot be " + Answer, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     questionModel.setAns(Answer);
 
                     addNewTestQuestionListener newTestQuestionListener = (addNewTestQuestionListener) getActivity();

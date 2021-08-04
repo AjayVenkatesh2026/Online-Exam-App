@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.TestsAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
+import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class CreateNewTestActivity extends AppCompatActivity implements addNewTestQuestionListener{
+public class CreateNewTestActivity extends AppCompatActivity implements addNewTestQuestionListener, setHeaderListener{
 
     private FloatingActionButton addNewQuestion;
     private Button exitButton, createNewTestButton;
@@ -34,6 +35,7 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference reference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
     ArrayList<TestQuestionModel> testQuestions = new ArrayList<>();
+    TestHeaderModel headerModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +47,14 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
         setListeners();
 
         setAdapter();
+
     }
 
     private void setAdapter() {
-        adapter = new TestsAdapter(testQuestions);
+        adapter = new TestsAdapter();
         recyclerView.setAdapter(adapter);
     }
+
 
     private void setListeners() {
         addNewQuestion.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +86,12 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
                             Toast.makeText(CreateNewTestActivity.this, "Same test Id\n trying again...", Toast.LENGTH_SHORT).show();
                             createNewTestButton.callOnClick();
                         }else{
+                            headerModel.setTestId(String.valueOf(TestUniqueId));
                             reference.child("Teachers").child(mAuth.getUid()).child("Tests").child(String.valueOf(TestUniqueId)).setValue("true");
                             DatabaseReference testRef = reference.child("Tests").child(String.valueOf(TestUniqueId));
+                            testRef.child("Header").setValue(headerModel);
                             for(TestQuestionModel t: testQuestions){
-                                testRef.push().setValue(t);
+                                testRef.child("Questions").push().setValue(t);
                             }
                         }
 
@@ -120,7 +126,16 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
     @Override
     public void addNewQuestion(TestQuestionModel testQuestion) {
         testQuestions.add(testQuestion);
-        adapter.notifyItemInserted(testQuestions.size()-1);
+        adapter.notifyItemInserted(testQuestions.size());
+    }
+
+    @Override
+    public void setHeaderModel(TestHeaderModel headerModel) {
+        this.headerModel = headerModel;
+
+        adapter.setHeader(headerModel);
+        adapter.setArrayList(testQuestions);
+        adapter.notifyItemInserted(0);
     }
 
     private void uploadData(checkIfTestIdExists listener, int testId){
@@ -135,6 +150,10 @@ public class CreateNewTestActivity extends AppCompatActivity implements addNewTe
             }
         });
     }
+}
+
+interface setHeaderListener{
+    void setHeaderModel(TestHeaderModel testHeaderModel);
 }
 
 interface addNewTestQuestionListener{

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -77,10 +78,12 @@ public class AddHeaderToTestFragment extends DialogFragment {
                 if(title.isEmpty() || description.isEmpty()){
                     Toast.makeText(getActivity().getBaseContext(), "Please provide title and description of the test", Toast.LENGTH_SHORT).show();
                 }else {
-                    TestQuestionModel testQuestionModel = new TestQuestionModel(title, description);
+                    TestHeaderModel headerModel = new TestHeaderModel(title, description);
 
-                    addNewTestQuestionListener newTestQuestionListener = (addNewTestQuestionListener) getActivity();
-                    newTestQuestionListener.addNewQuestion(testQuestionModel);
+
+                    setHeaderListener headerListener = (setHeaderListener) getActivity();
+                    headerListener.setHeaderModel(headerModel);
+                    //newTestQuestionListener.addNewQuestion(testQuestionModel);
 
                     Toast.makeText(getActivity().getBaseContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
                     getDialog().dismiss();

@@ -2,19 +2,11 @@ package com.ajayvenkateshgunturu.onlineexam.Models;
 
 public class TestQuestionModel {
     String question, optionOne, optionTwo, optionThree, optionFour;
-    String type, title, description;
-    int numOfOptions, priority;
+    int numOfOptions;
     String ans;
 
     public TestQuestionModel(){
 
-    }
-
-    public TestQuestionModel(String title, String description) {
-        this.title = title;
-        this.description = description;
-        type = "Header";
-        this.priority = 0;
     }
 
     public TestQuestionModel(String question, String optionOne, String optionTwo, String optionThree, String optionFour) {
@@ -39,25 +31,6 @@ public class TestQuestionModel {
         if(!optionThree.isEmpty() && !optionFour.isEmpty()){
             numOfOptions = 4;
         }
-
-        type = "Question";
-        this.priority = 1;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getQuestion() {
@@ -96,22 +69,6 @@ public class TestQuestionModel {
         this.numOfOptions = numOfOptions;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -141,8 +98,4 @@ public class TestQuestionModel {
         }
     }
 
-    public void log(){
-        System.out.println("Title: " + title + "\n"
-        + "Description: " + description + "\n");
-    }
 }
