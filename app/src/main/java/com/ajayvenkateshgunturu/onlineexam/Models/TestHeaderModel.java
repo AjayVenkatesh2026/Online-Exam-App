@@ -1,5 +1,7 @@
 package com.ajayvenkateshgunturu.onlineexam.Models;
 
+import android.os.Bundle;
+
 public class TestHeaderModel {
 
     String title, description, date, time, duration, testId;
@@ -66,5 +68,16 @@ public class TestHeaderModel {
 
     public void setTestId(String testId) {
         this.testId = testId;
+    }
+
+    public Bundle toBundle(){
+        Bundle b = new Bundle();
+        b.putString("title", this.getTitle());
+        b.putString("description", this.getDescription());
+        b.putString("date", this.getDate());
+        b.putString("time", this.getTime());
+        b.putString("duration", this.getDuration());
+        b.putString("testId", this.getTestId());
+        return b;
     }
 }
