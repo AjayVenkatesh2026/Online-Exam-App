@@ -109,7 +109,8 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
     @Override
     public void onTestItemClick(int position) {
         TestHeaderModel header = headerModelArrayList.get(position);
-        Log.e("Clicked", header.toBundle().toString());
-        //Intent i = new Intent(getActivity(), )
+        Intent i = new Intent(getActivity(), ConductTestActivity.class);
+        i.putExtra("header", header.toBundle());
+        startActivity(i);
     }
 }

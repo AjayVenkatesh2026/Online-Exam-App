@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Students.StudentsMainActivity;
 import com.ajayvenkateshgunturu.onlineexam.Teachers.TeachersMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -67,6 +69,13 @@ public class SplashScreenActivity extends AppCompatActivity {
                     String userType = task.getResult().getValue().toString();
                     listener.setUserType(userType);
                 }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Getting Data", "Failed");
+                Toast.makeText(getBaseContext(), "Client is offline\nTrying again.........", Toast.LENGTH_SHORT).show();
+                getCurrentUserType(listener);
             }
         });
     }

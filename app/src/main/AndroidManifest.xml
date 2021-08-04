@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineExam">
         <activity
+            android:name=".Students.TimeUntilTestActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".Students.ConductTestActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
             android:name=".Teachers.ShowClassActivity"
             android:exported="true" />
         <activity android:name=".Teachers.CreateNewTestActivity" />
