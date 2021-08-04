@@ -23,6 +23,8 @@ import com.ajayvenkateshgunturu.onlineexam.Constants;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Array;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -208,13 +211,66 @@ public class PostTestDialogFragment extends DialogFragment {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Log.e("Posted on classes", array[finalI]);
-                    if(finalI == array.length-1)
+                    if(finalI == array.length-1){
                         getDialog().dismiss();
+                        updateTestDetailsInClasses(array);
+                    }
                 }
             });
         }
+    }
 
+    private void updateTestDetailsInClasses(String[] arr){
+        for(String classId: arr){
+            reference.child("Classes").child(classId).child("Tests").child(headerModel.getTestId()).setValue("true").addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    getStudentsForClass(classId);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Update Test Failed", classId);
+                    //updateTestDetailsInClasses(arr);
+                }
+            });
+        }
+    }
 
+    private void getStudentsForClass(String classId) {
+        reference.child("Classes").child(classId).child("Students").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> studentsArrayList = new ArrayList<>();
+                for(DataSnapshot s: snapshot.getChildren()){
+                    studentsArrayList.add(s.getKey());
+                }
+                updateTestDetailsForStudents(studentsArrayList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database Error", error.getMessage());
+                //getStudentsForClass(classId);
+            }
+        });
+    }
+
+    private void updateTestDetailsForStudents(ArrayList<String> studentsArray) {
+        for(String student: studentsArray){
+            reference.child(Constants.TYPE_STUDENTS).child(student).child("Tests").child(headerModel.getTestId()).setValue("true").addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.e("Updated Test for", student);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Update Test Failed", student);
+                    //updateTestDetailsForStudents(studentsArray);
+                }
+            });
+        }
     }
 
     @Override
