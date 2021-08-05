@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Online Exam</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="instructions_heading">
+        Please read the following instructions before proceeding to the test:
+    </string>
+    <string name="instructions">
+        1. Do not close the application when you are writing the test.
+        \n2. Do not switch to other apps or tabs when writing the test.
+        \n3. If you do not follow the first and second steps the test will be auto-submitted.
+        \n4. Please submit the test before the time runs out or the test will be auto-submitted.
+        \n5. To submit the test click the check mark on the top right corner.
+    </string>
 </resources>

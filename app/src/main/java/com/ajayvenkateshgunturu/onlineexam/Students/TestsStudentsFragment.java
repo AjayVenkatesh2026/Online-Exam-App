@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.TestsStudentFragmentAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
+import com.ajayvenkateshgunturu.onlineexam.DialogFragments.ShowInstructionsDialogFragment;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestCounterModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
@@ -124,20 +125,23 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
             i = new Intent(getActivity(), TimeUntilTestActivity.class);
             i.putExtra("timeExceeded", false);
             i.putExtra("differenceInTime", counter.getDifferenceInTime());
+            i.putExtra("header", header.toBundle());
+            startActivity(i);
         }
         else if(counter.isItTimeForTest()){
-            i = new Intent(getActivity(), ConductTestActivity.class);
+            ShowInstructionsDialogFragment dialogFragment = new ShowInstructionsDialogFragment(header);
+            dialogFragment.show(getChildFragmentManager(), "Show Instructions");
         }
         else if(counter.isTimeUp()){
             i = new Intent(getActivity(), TimeUntilTestActivity.class);
             i.putExtra("timeExceeded", true);
             i.putExtra("differenceInTime", counter.getDifferenceInTime());
+            i.putExtra("header", header.toBundle());
+            startActivity(i);
         }
         else{
             Toast.makeText(getActivity(), "You messed up the if conditions!", Toast.LENGTH_SHORT).show();
         }
 
-        i.putExtra("header", header.toBundle());
-        startActivity(i);
     }
 }
