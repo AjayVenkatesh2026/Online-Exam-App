@@ -257,8 +257,11 @@ public class PostTestDialogFragment extends DialogFragment {
     }
 
     private void updateTestDetailsForStudents(ArrayList<String> studentsArray) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("submitted", false);
+        map.put("score", 0);
         for(String student: studentsArray){
-            reference.child(Constants.TYPE_STUDENTS).child(student).child("Tests").child(headerModel.getTestId()).setValue("true").addOnCompleteListener(new OnCompleteListener<Void>() {
+            reference.child(Constants.TYPE_STUDENTS).child(student).child("Tests").child(headerModel.getTestId()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Log.e("Updated Test for", student);
