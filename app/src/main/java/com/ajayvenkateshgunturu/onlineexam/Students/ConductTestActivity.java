@@ -1,9 +1,11 @@
 package com.ajayvenkateshgunturu.onlineexam.Students;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -12,12 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.ConductTestAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
+import com.ajayvenkateshgunturu.onlineexam.DialogFragments.ShowTestScoreFragment;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class ConductTestActivity extends AppCompatActivity {
@@ -37,8 +46,13 @@ public class ConductTestActivity extends AppCompatActivity {
     private ConductTestAdapter adapter;
     private ArrayList<TestQuestionModel> testQuestions = new ArrayList<>();
     private static final String TAG = "ConductTestActivity";
+    private boolean isSubmitted = false;
+
+    private boolean wantToSubmit = false;
+    private AlertDialog dialog;
 
     private DatabaseReference reference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +77,7 @@ public class ConductTestActivity extends AppCompatActivity {
         submitIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submit();
+                submit(true, false);
             }
         });
 
@@ -97,7 +111,7 @@ public class ConductTestActivity extends AppCompatActivity {
     }
 
     private void startTimer(long duration){
-        timer = new CountDownTimer(TimeUnit.MINUTES.toMillis(duration), 1000) {
+        timer = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished)%24;
@@ -108,13 +122,13 @@ public class ConductTestActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                submit();
+                submit(false, false);
             }
         };
         timer.start();
     }
 
-    private void submit(){
+    private void submit(boolean clicked, boolean isActivityDestroyed){
         ArrayList<Integer> answers = adapter.getAnswers();
         int score = 0;
         for(int i = 0; i < answers.size(); i++){
@@ -122,8 +136,79 @@ public class ConductTestActivity extends AppCompatActivity {
                 score++;
             }
         }
+        if(clicked){
+            showAlertDialog(score);
+            return;
+        }
+
+        if(!isActivityDestroyed){
+            ShowTestScoreFragment fragment = new ShowTestScoreFragment(score, testQuestions.size(), false);
+            fragment.show(getSupportFragmentManager(), "Score");
+        }
+
+        uploadScore(score, testQuestions.size());
+        isSubmitted = true;
+
         Log.e(TAG, "Score: " + score);
         Log.e(TAG, "submitted the test");
+    }
+
+    private void uploadScore(int score, int noOfQuestions) {
+        Log.e(TAG, "uploadScore Called");
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("submitted", true);
+        map.put("score", score);
+        map.put("noOfQuestions", noOfQuestions);
+        reference.child(Constants.TYPE_STUDENTS).child(auth.getUid()).child("Tests").child(header.getTestId()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getBaseContext(), "Data uploaded", Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.e(TAG, "Failed to upload Data: " +task.getResult().toString());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "upload Data Failed: " + e.getMessage());
+            }
+        });
+    }
+
+    private void showAlertDialog(int score){
+
+        dialog = new AlertDialog.Builder(this, R.style.Theme_AppCompat_DayNight_Dialog_Alert).setTitle("Submit Test")
+                .setMessage("Are you sure you want to submit the test?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        wantToSubmit = true;
+                        Log.e(TAG, "wantToSubmit: true");
+                        showTestResults(score);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        wantToSubmit = false;
+                    }
+                }).create();
+
+        dialog.show();
+    }
+
+    private void showTestResults(int score) {
+        if(wantToSubmit){
+            Log.e(TAG, "ShowResult: true");
+            ShowTestScoreFragment fragment = new ShowTestScoreFragment(score, testQuestions.size(), false);
+            fragment.show(getSupportFragmentManager(), "Score");
+
+            uploadScore(score, testQuestions.size());
+            isSubmitted = true;
+
+            Log.e(TAG, "Score: " + score);
+            Log.e(TAG, "submitted the test");
+        }
     }
 
     private String timeToString(long hours, long minutes, long seconds){
@@ -135,9 +220,22 @@ public class ConductTestActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        if(!isSubmitted) {
+            submit(false, true);
+            finish();
+        }
+
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         if(timer != null)
             timer.cancel();
+        if(dialog != null)
+            dialog.cancel();
+
         super.onDestroy();
     }
 }

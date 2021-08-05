@@ -17,10 +17,12 @@ import android.widget.Toast;
 import com.ajayvenkateshgunturu.onlineexam.Adapters.TestsStudentFragmentAdapter;
 import com.ajayvenkateshgunturu.onlineexam.Constants;
 import com.ajayvenkateshgunturu.onlineexam.DialogFragments.ShowInstructionsDialogFragment;
+import com.ajayvenkateshgunturu.onlineexam.DialogFragments.ShowTestScoreFragment;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestCounterModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +42,7 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
     private DatabaseReference reference = FirebaseDatabase.getInstance(Constants.FIREBASE_URL).getReference();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
+    private static final String TAG = "TestsStudentsFragment";
 
     public TestsStudentsFragment() {
         // Required empty public constructor
@@ -111,8 +114,37 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
 
     @Override
     public void onTestItemClick(int position) {
+
+        String testId = headerModelArrayList.get(position).getTestId();
+
+        reference.child(Constants.TYPE_STUDENTS).child(auth.getUid()).child("Tests").child(testId).child("submitted").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()){
+                    Log.e(TAG, "Test data of TestId: "+ testId +" is downloaded");
+                    boolean isSubmitted = task.getResult().getValue(Boolean.class);
+                    if(!isSubmitted){
+                        fireAppropriateIntent(position);
+                    }else{
+                        ShowTestScoreFragment dialogFragment = new ShowTestScoreFragment(testId);
+                        dialogFragment.show(getChildFragmentManager(), "Show Score");
+                        Log.e(TAG, "Test is already Submitted");
+                        Toast.makeText(getActivity(), "Test is already Submitted", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
+        });
+    }
+
+
+    private void fireAppropriateIntent(int position) {
         TestHeaderModel header = headerModelArrayList.get(position);
-        Intent i = new Intent();
+        Intent i;
 
         int duration = Integer.parseInt(header.getDuration());
         String[] date = header.getDate().split("-");
@@ -142,6 +174,5 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
         else{
             Toast.makeText(getActivity(), "You messed up the if conditions!", Toast.LENGTH_SHORT).show();
         }
-
     }
 }
