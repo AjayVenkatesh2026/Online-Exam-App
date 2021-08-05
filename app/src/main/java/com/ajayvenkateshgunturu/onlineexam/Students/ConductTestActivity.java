@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ajayvenkateshgunturu.onlineexam.Adapters.ConductTestAdapter;
@@ -28,6 +32,7 @@ public class ConductTestActivity extends AppCompatActivity {
     private TestHeaderModel header;
     private CountDownTimer timer;
     private TextView countDownTextView;
+    private ImageView submitIcon;
     private RecyclerView recyclerView;
     private ConductTestAdapter adapter;
     private ArrayList<TestQuestionModel> testQuestions = new ArrayList<>();
@@ -52,7 +57,15 @@ public class ConductTestActivity extends AppCompatActivity {
 
     private void initViews() {
         countDownTextView = findViewById(R.id.text_view_conduct_test_timer);
+        submitIcon = findViewById(R.id.image_view_submit_icon);
         recyclerView = findViewById(R.id.recycler_view_conduct_test);
+
+        submitIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+            }
+        });
 
         countDownTextView.setText(timeToString(Long.parseLong(header.getDuration()), 0, 0));
     }
@@ -69,8 +82,10 @@ public class ConductTestActivity extends AppCompatActivity {
                 for(DataSnapshot s: snapshot.getChildren()){
                     TestQuestionModel questions = s.getValue(TestQuestionModel.class);
                     testQuestions.add(questions);
+                    adapter.notifyItemAdded();
                     adapter.notifyItemInserted(testQuestions.size());
                 }
+
                 startTimer(Long.parseLong(header.getDuration()));
             }
 
@@ -100,11 +115,23 @@ public class ConductTestActivity extends AppCompatActivity {
     }
 
     private void submit(){
+        ArrayList<Integer> answers = adapter.getAnswers();
+        int score = 0;
+        for(int i = 0; i < answers.size(); i++){
+            if(Integer.parseInt(testQuestions.get(i).getAns()) == answers.get(i)){
+                score++;
+            }
+        }
+        Log.e(TAG, "Score: " + score);
         Log.e(TAG, "submitted the test");
     }
 
     private String timeToString(long hours, long minutes, long seconds){
-        return hours + " : " + minutes + " : " + seconds;
+        return n(hours) + " : " + n(minutes) + " : " + n(seconds);
+    }
+
+    private String n(long n){
+        return n > 9 ? "" + n: "0" + n;
     }
 
     @Override

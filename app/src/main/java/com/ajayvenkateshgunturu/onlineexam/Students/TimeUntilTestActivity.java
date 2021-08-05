@@ -93,7 +93,8 @@ public class TimeUntilTestActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        timer.cancel();
+        if(timer != null)
+            timer.cancel();
         super.onDestroy();
     }
 }

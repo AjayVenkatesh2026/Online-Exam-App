@@ -23,6 +23,7 @@ public class ConductTestAdapter extends RecyclerView.Adapter<ConductTestAdapter.
 
     private Context mContext;
     private ArrayList<TestQuestionModel> questions;
+    private ArrayList<Integer> answers = new ArrayList<>();
 
     public ConductTestAdapter(Context mContext, ArrayList<TestQuestionModel> questions) {
         this.mContext = mContext;
@@ -44,6 +45,18 @@ public class ConductTestAdapter extends RecyclerView.Adapter<ConductTestAdapter.
     @Override
     public int getItemCount() {
         return questions.size();
+    }
+
+    public ArrayList<Integer> getAnswers() {
+        return answers;
+    }
+
+    public void notifyItemAdded(){
+        answers.add(0);
+    }
+
+    public void setAnswers(ArrayList<Integer> answers) {
+        this.answers = answers;
     }
 
     public class TestQuestionViewHolder extends RecyclerView.ViewHolder{
@@ -103,6 +116,7 @@ public class ConductTestAdapter extends RecyclerView.Adapter<ConductTestAdapter.
                         default:
                             ans = 0;
                     }
+                    answers.set(position, ans);
                     Log.e("Position " + position, "Ans: " + ans);
                 }
             });

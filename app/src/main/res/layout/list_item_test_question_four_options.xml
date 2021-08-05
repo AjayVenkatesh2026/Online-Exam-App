@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="4dp"
     android:elevation="2dp"
+    app:cardCornerRadius="4dp"
     app:cardUseCompatPadding="true"
     tools:backgroundTint="#E0E0E0">
 
@@ -17,11 +17,9 @@
             android:id="@+id/text_view_list_item_test_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="20sp"
+            android:padding="8dp"
             android:fontFamily="sans-serif-condensed"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,37 +37,37 @@
                 android:id="@+id/radio_button_option_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="option one"
-                android:textSize="16sp"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="4dp"
-                android:fontFamily="sans-serif-condensed"/>
+                android:text="option one"
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_option_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="option one"
-                android:textSize="16sp"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="4dp"
-                android:fontFamily="sans-serif-condensed"/>
+                android:text="option one"
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_option_three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="option one"
-                android:textSize="16sp"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="4dp"
-                android:fontFamily="sans-serif-condensed"/>
+                android:text="option one"
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_option_four"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="option one"
-                android:textSize="16sp"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="4dp"
-                android:fontFamily="sans-serif-condensed"                />
+                android:text="option one"
+                android:textSize="16sp" />
 
         </RadioGroup>
 
