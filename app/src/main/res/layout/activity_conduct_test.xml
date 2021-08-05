@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_view_conduct_test_title"
+                android:id="@+id/text_view_wait_until_test_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_view_conduct_test_description"
+                android:id="@+id/text_view_wait_until_test_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintEnd_toStartOf="@id/linear_layout_timer"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_conduct_test_title" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_wait_until_test_title" />
 
             <LinearLayout
                 android:id="@+id/linear_layout_timer"

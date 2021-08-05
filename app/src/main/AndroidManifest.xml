@@ -12,6 +12,7 @@
         <activity
             android:name=".Students.TimeUntilTestActivity"
             android:exported="true"
+            android:parentActivityName=".Students.StudentsMainActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity
             android:name=".Students.ConductTestActivity"

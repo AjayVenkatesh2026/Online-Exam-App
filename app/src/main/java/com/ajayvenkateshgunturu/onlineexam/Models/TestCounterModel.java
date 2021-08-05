@@ -124,4 +124,8 @@ public class TestCounterModel {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    public long getDifferenceInTime() {
+        return differenceInTime;
+    }
 }
