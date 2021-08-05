@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/text_view_conduct_test_timer_hours"
+                    android:id="@+id/text_view_conduct_test_timer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"

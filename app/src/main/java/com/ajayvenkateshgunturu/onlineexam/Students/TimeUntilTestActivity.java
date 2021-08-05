@@ -37,7 +37,8 @@ public class TimeUntilTestActivity extends AppCompatActivity {
 
         initViews();
 
-        startCountDown();
+        if(!timeExceeded)
+            startCountDown();
     }
 
     private void initViews() {

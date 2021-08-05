@@ -131,6 +131,7 @@ public class TestsStudentsFragment extends Fragment implements TestsStudentFragm
         else if(counter.isTimeUp()){
             i = new Intent(getActivity(), TimeUntilTestActivity.class);
             i.putExtra("timeExceeded", true);
+            i.putExtra("differenceInTime", counter.getDifferenceInTime());
         }
         else{
             Toast.makeText(getActivity(), "You messed up the if conditions!", Toast.LENGTH_SHORT).show();

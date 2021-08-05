@@ -80,4 +80,11 @@ public class TestHeaderModel {
         b.putString("testId", this.getTestId());
         return b;
     }
+
+    public static TestHeaderModel fromBundle(Bundle bundle){
+        TestHeaderModel header =  new TestHeaderModel(bundle.getString("title"), bundle.getString("description"),
+                bundle.getString("date"), bundle.getString("time"), bundle.getString("duration"));
+        header.setTestId(bundle.getString("testId"));
+        return header;
+    }
 }

@@ -126,6 +126,7 @@ public class TestCounterModel {
     }
 
     public long getDifferenceInTime() {
+        calculateDifferenceInTime();
         return differenceInTime;
     }
 }
