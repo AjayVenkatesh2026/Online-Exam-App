@@ -9,8 +9,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +19,7 @@ import com.ajayvenkateshgunturu.onlineexam.Constants;
 import com.ajayvenkateshgunturu.onlineexam.DialogFragments.ShowTestScoreFragment;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
+import com.ajayvenkateshgunturu.onlineexam.Models.TestResultModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -111,7 +110,7 @@ public class ConductTestActivity extends AppCompatActivity {
     }
 
     private void startTimer(long duration){
-        timer = new CountDownTimer(10000, 1000) {
+        timer = new CountDownTimer(TimeUnit.MINUTES.toMillis(duration), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished)%24;
@@ -164,6 +163,8 @@ public class ConductTestActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(getBaseContext(), "Data uploaded", Toast.LENGTH_SHORT).show();
+                    uploadScoreToTest(score, noOfQuestions);
+
                 }else{
                     Log.e(TAG, "Failed to upload Data: " +task.getResult().toString());
                 }
@@ -172,6 +173,25 @@ public class ConductTestActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.e(TAG, "upload Data Failed: " + e.getMessage());
+            }
+        });
+    }
+
+    private void uploadScoreToTest(int score, int noOfQuestions){
+        TestResultModel result = new TestResultModel(auth.getUid(), auth.getCurrentUser().getEmail(), score, noOfQuestions);
+        reference.child("Tests").child(header.getTestId()).child("Results").child(auth.getUid()).setValue(result).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getBaseContext(), "Upload data to tests succeeded", Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.e(TAG, "Failed to upload Data to Tests: " +task.getResult().toString());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "upload Data to Tests Failed: " + e.getMessage());
             }
         });
     }
