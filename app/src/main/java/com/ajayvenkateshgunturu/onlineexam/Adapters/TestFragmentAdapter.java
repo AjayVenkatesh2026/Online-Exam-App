@@ -1,6 +1,7 @@
 package com.ajayvenkateshgunturu.onlineexam.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.ajayvenkateshgunturu.onlineexam.DialogFragments.PostTestDialogFragmen
 import com.ajayvenkateshgunturu.onlineexam.Models.TestHeaderModel;
 import com.ajayvenkateshgunturu.onlineexam.Models.TestQuestionModel;
 import com.ajayvenkateshgunturu.onlineexam.R;
+import com.ajayvenkateshgunturu.onlineexam.Teachers.ShowTestResultsActivity;
 
 import java.util.ArrayList;
 
@@ -71,6 +73,15 @@ public class TestFragmentAdapter extends RecyclerView.Adapter<TestFragmentAdapte
             testTitle.setText(headerModel.getTitle());
             testDescription.setText(headerModel.getDescription());
             testIcon.setText(headerModel.getTitle().substring(0, 1).toUpperCase());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, ShowTestResultsActivity.class);
+                    i.putExtra("testId", headerModel.getTestId());
+                    context.startActivity(i);
+                }
+            });
 
             popupTextview.setOnClickListener(new View.OnClickListener() {
                 @Override

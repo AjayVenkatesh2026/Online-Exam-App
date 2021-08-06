@@ -10,10 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineExam">
         <activity
+            android:name=".Teachers.ShowTestResultsActivity"
+            android:exported="true"
+            android:label="Test Results"
+            android:parentActivityName=".Teachers.TeachersMainActivity"/>
+        <activity
             android:name=".Students.TimeUntilTestActivity"
             android:exported="true"
             android:parentActivityName=".Students.StudentsMainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".Students.ConductTestActivity"
             android:exported="true"

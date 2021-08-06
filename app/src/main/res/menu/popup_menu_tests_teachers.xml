@@ -5,5 +5,5 @@
         android:title="Post test" />
     <item
         android:id="@+id/menu_item_delete_test"
-        android:title="Delete test" />
+        android:title="Dummy option" />
 </menu>
