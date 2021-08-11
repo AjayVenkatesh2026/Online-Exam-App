@@ -60,7 +60,9 @@ public class AddHeaderToTestFragment extends DialogFragment {
                 String description = testDescription.getText().toString().trim();
 
                 if(title.isEmpty() || description.isEmpty()){
-                    Toast.makeText(getActivity().getBaseContext(), "Please provide title and description of the test", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                    getDialog().dismiss();
+                    //Toast.makeText(getActivity(), "Please provide title and description of the test", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
                     getDialog().dismiss();
@@ -76,7 +78,7 @@ public class AddHeaderToTestFragment extends DialogFragment {
                 String description = testDescription.getText().toString().trim();
 
                 if(title.isEmpty() || description.isEmpty()){
-                    Toast.makeText(getActivity().getBaseContext(), "Please provide title and description of the test", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please provide title and description of the test", Toast.LENGTH_SHORT).show();
                 }else {
                     TestHeaderModel headerModel = new TestHeaderModel(title, description);
 

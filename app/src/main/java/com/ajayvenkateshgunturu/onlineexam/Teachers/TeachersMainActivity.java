@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.ajayvenkateshgunturu.onlineexam.Constants;
 import com.ajayvenkateshgunturu.onlineexam.LoginUserActivity;
+import com.ajayvenkateshgunturu.onlineexam.ProfileFragment;
 import com.ajayvenkateshgunturu.onlineexam.R;
 import com.ajayvenkateshgunturu.onlineexam.Students.JoinAClassFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,7 +32,7 @@ public class TeachersMainActivity extends AppCompatActivity {
             }
             else if(id == R.id.menu_item_profile){
                 Toast.makeText(TeachersMainActivity.this, "Profile Clicked", Toast.LENGTH_SHORT).show();
-                getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, ProfileTeachersFragment.class, null).commit();
+                getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view_teacher, new ProfileFragment(Constants.TYPE_TEACHERS), null).commit();
             }
             else if(id == R.id.menu_item_tests){
                 Toast.makeText(TeachersMainActivity.this, "Tests Clicked", Toast.LENGTH_SHORT).show();

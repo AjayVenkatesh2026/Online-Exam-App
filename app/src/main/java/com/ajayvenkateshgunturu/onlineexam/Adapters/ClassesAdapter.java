@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ajayvenkateshgunturu.onlineexam.Models.ClassModel;
@@ -48,7 +49,7 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.classVie
 
     class classViewHolder extends RecyclerView.ViewHolder{
 
-        TextView classTitle, classDescription, classIcon;
+        TextView classTitle, classDescription, classIcon, menuIcon;
 
         public classViewHolder(@NonNull  View itemView) {
             super(itemView);
@@ -56,6 +57,13 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.classVie
             classTitle = itemView.findViewById(R.id.text_view_list_item_class_title);
             classDescription = itemView.findViewById(R.id.text_view_list_item_class_description);
             classIcon = itemView.findViewById(R.id.text_view_list_item_class_icon);
+            menuIcon = itemView.findViewById(R.id.text_view_list_item_popup_menu);
+
+            menuIcon.setPadding(0,0,0,0);
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) menuIcon.getLayoutParams();
+            params.height = 0;
+            params.width = 0;
+            menuIcon.setLayoutParams(params);
         }
 
         public void bind(int position){

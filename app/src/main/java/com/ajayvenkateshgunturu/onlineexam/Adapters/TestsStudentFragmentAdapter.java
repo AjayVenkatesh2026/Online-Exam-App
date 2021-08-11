@@ -55,21 +55,21 @@ public class TestsStudentFragmentAdapter extends RecyclerView.Adapter<TestsStude
 
     class StudentTestViewHolder extends RecyclerView.ViewHolder{
 
-        TextView title, description, menuIcon, profileIcon;
+        TextView title, description, profileTextView, menuIcon;
 
         public StudentTestViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.text_view_list_item_class_title);
             description = itemView.findViewById(R.id.text_view_list_item_class_description);
-            menuIcon = itemView.findViewById(R.id.text_view_list_item_class_icon);
-            profileIcon = itemView.findViewById(R.id.text_view_list_item_popup_menu);
+            profileTextView = itemView.findViewById(R.id.text_view_list_item_class_icon);
+            menuIcon = itemView.findViewById(R.id.text_view_list_item_popup_menu);
 
-            profileIcon.setPadding(0,0,0,0);
-            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) profileIcon.getLayoutParams();
+            menuIcon.setPadding(0,0,0,0);
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) menuIcon.getLayoutParams();
             params.height = 0;
             params.width = 0;
-            profileIcon.setLayoutParams(params);
+            menuIcon.setLayoutParams(params);
 
 
         }
@@ -79,7 +79,7 @@ public class TestsStudentFragmentAdapter extends RecyclerView.Adapter<TestsStude
             TestHeaderModel headerModel = testsArrayList.get(position);
             title.setText(headerModel.getTitle());
             description.setText(headerModel.getDescription());
-            menuIcon.setText(headerModel.getTitle().substring(0, 1).toUpperCase());
+            profileTextView.setText(headerModel.getTitle().substring(0, 1).toUpperCase());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

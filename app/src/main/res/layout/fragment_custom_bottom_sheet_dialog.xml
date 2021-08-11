@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".DialogFragments.CustomBottomSheetDialogFragment">
+
+    <TextView
+        android:id="@+id/text_view_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Enter new name"
+        android:fontFamily="sans-serif"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/edit_text_dialog_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/teal_200"
+        android:text="User Name"
+        android:typeface="sans"
+        android:focusedByDefault="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dialog_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_save_button"
+        android:text="save"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="8dp"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/teal_700"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_dialog_input" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_cancel_button"
+        android:text="cancel"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toStartOf="@id/text_view_save_button"
+        android:padding="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="24dp"
+        android:textColor="@color/teal_700"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_dialog_input" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

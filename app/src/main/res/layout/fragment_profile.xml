@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_image_container"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="125dp"
+        app:layout_constraintBottom_toTopOf="@id/text_input_layout_user_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_view_profile_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:background="@drawable/ic_launcher_background" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#199FFF"
+        app:cardCornerRadius="28dp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_view_image_container"
+        app:layout_constraintEnd_toEndOf="@+id/card_view_image_container">
+
+        <ImageView
+            android:id="@+id/image_view_change_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_camera"
+            app:tint="@android:color/white" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Name"
+        android:clickable="true"
+        app:boxBackgroundMode="outline"
+        app:endIconDrawable="@drawable/icon_edit"
+        app:endIconMode="custom"
+        app:helperText="Click to change you name."
+        app:hintEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view_image_container">
+
+        <EditText
+            android:id="@+id/edit_text_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="@color/white"
+            android:fontFamily="sans-serif"
+            android:inputType="none"
+            android:padding="0dp"
+            android:editable="false"
+            android:text="User Name"
+            android:textSize="20sp"
+            android:clickable="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/view_margin_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="12dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_user_name" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_user_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Mail"
+        android:clickable="true"
+        app:boxBackgroundMode="outline"
+        app:endIconDrawable="@drawable/icon_edit"
+        app:endIconMode="custom"
+        app:helperText="change the email of your account."
+        app:hintEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_margin_line">
+
+        <EditText
+            android:id="@+id/edit_text_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="@color/white"
+            android:fontFamily="sans-serif"
+            android:inputType="none"
+            android:editable="false"
+            android:padding="0dp"
+            android:text="usermail@mail.com"
+            android:textSize="20sp"
+            android:clickable="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/view_margin_line_two"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="12dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_user_mail" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
